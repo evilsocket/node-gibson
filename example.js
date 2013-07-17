@@ -59,7 +59,11 @@ var c = new Gibson.Client( 'unix:///var/run/gibson.sock' );
 
 c.connect();
 
-c.on( 'connect', benchmark );
+c.on( 'connect', function(){ 
+    c.set( 0, 'foo', 'bar', function( e, d ){
+        console.log( 'Reply: ' + d );
+    });
+});
 
 c.on( 'error', function(e){
     console.log( 'ERROR: ' + e );
