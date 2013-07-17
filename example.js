@@ -41,7 +41,7 @@ var benchmark = function() {
 	var x = 0;
 
 	for (var i=0; i<=count; i++) {
-		c.ping( function( data) {
+		c.ping( function( err ) {
 			x += 1;
             if( x == count ){
                 delta = microtime(true) - start;
@@ -55,7 +55,7 @@ var benchmark = function() {
 	c.close();
 };
 
-var c = new Gibson.Client( '/home/evilsocket/Desktop/Dev/gibson/gibson/gibson.sock' );
+var c = new Gibson.Client( 'unix:///var/run/gibson.sock' );
 
 c.connect();
 
