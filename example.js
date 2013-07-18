@@ -34,7 +34,7 @@ function microtime() {
 }
 
 var benchmark = function() {
-	var count = 10000;
+	var count = 100000;
     var delta, start = microtime(true);
 	var x = 0;
 
@@ -54,8 +54,18 @@ var benchmark = function() {
                 console.log( 'Benchmark finished: ' + ( x / delta ).toFixed(2)  + 
                              ' requests/second ( time: ' + delta.toFixed(2)  + ' s )' );
 
-                c.end( function(){
-                    c.close();
+                c.stats( function(e,d){
+                    c.del( 'foo', function(){
+                        console.log();
+                        
+                        for( var key in d ){
+                            console.log( key + ' : ' + d[key] );
+                        }
+
+                        console.log();
+
+                        c.close();
+                    });
                 });
             }
 		});
@@ -66,7 +76,6 @@ var c = new Gibson.Client( 'unix:///var/run/gibson.sock' );
 
 console.log( 'Connecting ...' );
 
-c.connect();
 
 c.on( 'connect', function(){
     // SET 0 foo bar
@@ -83,6 +92,8 @@ c.on( 'connect', function(){
         }); 
     });
 });
+
+c.connect();
 
 c.on( 'error', function(e){
     console.log( 'ERROR: ' + e );
