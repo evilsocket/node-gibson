@@ -14,7 +14,7 @@
  *     to endorse or promote products derived from this software without
  *     specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
@@ -36,34 +36,38 @@ function microtime(get_as_float) {
 }
 
 var benchmark = function() {
-	var count = 100000;
-	start = microtime(true);
+	var count = 10000;
+    var delta, start = microtime(true);
 	var x = 0;
 
-	for (var i=0; i<=count; i++) {
+    console.log( 'Connected, starting benchmark ...' );
+
+	for (var i = 1; i <= count; i++) {
 		c.ping( function( err ) {
 			x += 1;
+
             if( x == count ){
                 delta = microtime(true) - start;
-            
-                util.debug( 'r/s ' + x / delta + ' ( total time: ' + delta + ' )' );
+                
+                console.log( 'Benchmark finished: ' + ( x / delta ).toFixed(2)  + ' requests/second ( time: ' + delta.toFixed(2)  + ' s )' );
+
+                c.close();
             }
-           
 		});
 	}
-
-	c.close();
 };
 
 var c = new Gibson.Client( 'unix:///var/run/gibson.sock' );
 
+console.log( 'Connecting ...' );
+
 c.connect();
 
-c.on( 'connect', function(){ 
+c.on( 'connect', /* function(){ 
     c.set( 0, 'foo', 'bar', function( e, d ){
         console.log( 'Reply: ' + d );
     });
-});
+}*/ benchmark );
 
 c.on( 'error', function(e){
     console.log( 'ERROR: ' + e );
