@@ -54,7 +54,9 @@ var benchmark = function() {
                 console.log( 'Benchmark finished: ' + ( x / delta ).toFixed(2)  + 
                              ' requests/second ( time: ' + delta.toFixed(2)  + ' s )' );
 
-                c.close();
+                c.end( function(){
+                    c.close();
+                });
             }
 		});
 	}
