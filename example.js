@@ -36,19 +36,17 @@ function microtime() {
 var benchmark = function() {
 	var count = 100000;
     var delta, start = microtime(true);
-	var x = 0;
+	var x = 0, i;
 
     console.log( 'Starting benchmark ...' );
 
-	for (var i = 1; i <= count; i++) {
+	for( i = 0; i < count; i++) {
 		c.get( 'foo', function( err, data ) {
             if( data != 'bar' ){
                 console.log( 'Unexpected data "' + data + '" ( error: "' + err + '" )' ); 
             }
 
-			x += 1;
-        
-            if( x == count ){
+            if( ++x == count ){
                 delta = microtime(true) - start;
                 
                 console.log( 'Benchmark finished: ' + ( x / delta ).toFixed(2)  + 
@@ -67,6 +65,9 @@ var benchmark = function() {
                         c.close();
                     });
                 });
+            }
+            else if( ( x % 1000 ) == 0 ){
+                console.log( '  ' + x + '/' + count );
             }
 		});
 	}
