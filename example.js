@@ -75,7 +75,26 @@ var benchmark = function() {
 var c = new Gibson.Client( 'unix:///var/run/gibson.sock' );
 
 console.log( 'Connecting ...' );
-
+/*
+c.on( 'connect', function(){
+    c.set( 0, 'foo', 'bar', function(e,d){
+        console.log( 'set: ' + ( e != null ? e : d ) );
+        c.lock( 'foo', 1000, function(e,d){
+            console.log( '  lock: ' + ( e != null ? e : d ) );
+            c.del( 'foo', function(e,d){
+                console.log( '    del: ' + e );
+                c.unlock( 'foo', function(e,d){
+                    console.log( '  unlock: ' + ( e != null ? e : d ) );
+                    c.del( 'foo', function(d,e){
+                        console.log( '    del: ' + ( e != null ? e : d ) );        
+                        c.close();
+                    });
+                });
+            });
+        });
+    });
+});
+*/
 
 c.on( 'connect', function(){
     // SET 0 foo bar
