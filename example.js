@@ -66,9 +66,6 @@ var benchmark = function() {
                     });
                 });
             }
-            else if( ( x % 1000 ) == 0 ){
-                console.log( '  ' + x + '/' + count );
-            }
 		});
 	}
 };
