@@ -67,7 +67,7 @@ After connecting, you can start to make requests.
 		// create ( or replace ) a value with a TTL of 3600 seconds.
         // set the TTL to zero and the value will never expire.
 
-	}, lifetime);
+	});
 
 	client.del('key', function(error, result){
 
