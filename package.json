@@ -1,5 +1,5 @@
 {
-  "name": "njs-gibson",
+  "name": "gibson-client",
   "description": "Gibson client",
   "version": "1.0.2",
   "homepage": "https://github.com/evilsocket/node-gibson",
@@ -12,5 +12,5 @@
   "engines": {
     "node": ">=0.6.0"
   },
-  "keywords": [ "gibson", "cache" ]
+  "keywords": [ "gibson", "cache", "server", "client", "gibson cache server", "cache server" ]
 }
