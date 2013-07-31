@@ -29,51 +29,10 @@
 var util = require('util');
 var Gibson = require('./lib/gibson');
 
-function microtime() {  
-    return new Date().getTime() / 1000; 
-}
-
-var benchmark = function() {
-	var count = 100000;
-    var delta, start = microtime(true);
-	var x = 0, i;
-
-    console.log( 'Starting benchmark ...' );
-
-	for( i = 0; i < count; i++) {
-		c.get( 'foo', function( err, data ) {
-            if( data != 'bar' ){
-                console.log( 'Unexpected data "' + data + '" ( error: "' + err + '" )' ); 
-            }
-
-            if( ++x == count ){
-                delta = microtime(true) - start;
-                
-                console.log( 'Benchmark finished: ' + ( x / delta ).toFixed(2)  + 
-                             ' requests/second ( time: ' + delta.toFixed(2)  + ' s )' );
-
-                c.stats( function(e,d){
-                    c.del( 'foo', function(){
-                        console.log();
-                        
-                        for( var key in d ){
-                            console.log( key + ' : ' + d[key] );
-                        }
-
-                        console.log();
-
-                        c.close();
-                    });
-                });
-            }
-		});
-	}
-};
-
 var c = new Gibson.Client( 'unix:///var/run/gibson.sock' );
 
 console.log( 'Connecting ...' );
-/*
+
 c.on( 'connect', function(){
     c.set( 0, 'foo', 'bar', function(e,d){
         console.log( 'set: ' + ( e != null ? e : d ) );
@@ -90,23 +49,6 @@ c.on( 'connect', function(){
                 });
             });
         });
-    });
-});
-*/
-
-c.on( 'connect', function(){
-    // SET 0 foo bar
-    c.set( 0, 'foo', 'bar', function(e,d){
-        console.log( 'set reply: ' + d );
-        // GET foo
-        c.get( 'foo', function(e,d){
-            console.log( 'get reply: ' + d );
-            // PING
-            c.ping( function(){
-                console.log( 'got ping reply' );
-                benchmark(); 
-            });
-        }); 
     });
 });
 
