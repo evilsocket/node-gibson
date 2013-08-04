@@ -1,7 +1,7 @@
 {
   "name": "gibson-client",
   "description": "Gibson client",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "homepage": "https://github.com/evilsocket/node-gibson",
   "repository": "git://github.com/evilsocket/node-gibson.git",
   "author": "Simone Margaritelli <evilsocket@gmail.com>",
